@@ -67,7 +67,7 @@ const Navbar = () => {
                             Home
                         </Link>
                         <Link
-                            to="/who-we-are"
+                            to="/about-us"
                             className={`block md:inline py-2 md:py-0 font-medium text-center ${
                                 isActive("/who-we-are") ? "text-[#183C58]" : "text-black"
                             } hover:text-[#183C58]`}
@@ -75,7 +75,7 @@ const Navbar = () => {
                             About Us
                         </Link>
                         <Link
-                            to="/how-we-do-it"
+                            to="/our-services"
                             className={`block md:inline py-2 md:py-0 font-medium text-center ${
                                 isActive("/how-we-do-it") ? "text-[#183C58]" : "text-black"
                             } hover:text-[#183C58]`}
@@ -84,7 +84,7 @@ const Navbar = () => {
                         </Link>
                         <Link
                             to="/contact-us"
-                            className={`block md:inline py-2 md:py-0 font-medium text-center ${
+                            className={`block md:inline md:py-0 font-medium text-center ${
                                 isActive("/contact-us") ? "text-[#183C58]" : "text-black"
                             } hover:text-[#183C58]`}
                         >
