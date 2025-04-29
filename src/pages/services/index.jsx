@@ -1,11 +1,33 @@
-import { useEffect } from "react";
+
 import Navbar from "../../components/navbar";
 import Footer from "../../components/footer";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect} from "react";
 
 const Services = () => {
-    const [showScrollButton] = useState(false);
+    const [showScrollButton, setShowScrollButton] = useState(false);
+
+     // Handle scroll events to toggle button visibility
+     useEffect(() => {
+        const handleScroll = () => {
+            if (window.scrollY > 200) {
+                setShowScrollButton(true);
+            } else {
+                setShowScrollButton(false);
+            }
+        };
+        window.addEventListener("scroll", handleScroll);
+
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
+
+    // Scroll to top logic
+    const scrollToTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+        });
+    };
 
     useEffect(() => {
         const hash = window.location.hash;
@@ -21,13 +43,7 @@ const Services = () => {
         }
     }, []);
 
-    // Scroll to top logic
-    const scrollToTop = () => {
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth",
-        });
-    }
+   
 
     return (
         <>

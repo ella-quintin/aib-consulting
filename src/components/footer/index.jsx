@@ -13,7 +13,7 @@ const Footer = () => {
         <div className="flex flex-col text-left">
           <h3 className="text-lg font-bold mb-4">AIB Consulting</h3>
           <p className="text-sm md:text-sm text-white hover:text-gray-100 leading-relaxed font-thin text-left mb-6">
-            Pleroma Sycamore Foundation is a divine inspiration, established to enforce God’s will on earth through impactful partnerships and spirit-filled initiatives.
+          AIB Consulting is an ICT consulting firm working to assist companies streamline their ICT systems and providing them with turnkey ICT Solutions to enable them participate competitively in the digital economy.
           </p>
           <h3 className="text-lg text-left font-bold mb-3">Social Media</h3>
           <div className="mt-4 flex text-left space-x-4">
@@ -101,7 +101,6 @@ const Footer = () => {
       <div className="mt-12 border-t border-white pt-6 text-center">
         <p className="text-sm">
           &copy; {new Date().getFullYear()} AIB Consulting. All rights reserved.
-          <a href="https://www.freepik.com" className="text-gray-300 hover:underline" target="_blank" rel="noopener noreferrer"> Freepik</a>
         </p>
       </div>
     </footer >

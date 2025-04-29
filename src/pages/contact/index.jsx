@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { useState,} from "react";
+import { useState, useEffect} from "react";
 import {
     Phone,
     MapPin,
@@ -22,35 +22,51 @@ const cardVariant = {
 
 
 const ContactUs = () => {
-    const [showScrollButton] = useState(false);
+    const [showScrollButton, setShowScrollButton] = useState(false);
+     // Handle scroll events to toggle button visibility
+        useEffect(() => {
+            const handleScroll = () => {
+                if (window.scrollY > 200) {
+                    setShowScrollButton(true);
+                } else {
+                    setShowScrollButton(false);
+                }
+            };
+            window.addEventListener("scroll", handleScroll);
+    
+            return () => window.removeEventListener("scroll", handleScroll);
+        }, []);
+    
+        // Scroll to top logic
+        const scrollToTop = () => {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth",
+            });
+        };
 
-    // Scroll to top logic
-    const scrollToTop = () => {
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth",
-        });
-    }
+  
+
     const contactItems = [
         {
             icon: <Phone size={28} className="text-[#099AB3] mx-auto mb-2" />,
             title: "Phone",
-            content: "+01-234-567-890",
+            content: "+233-302905659 | +233-243380612",
         },
         {
             icon: <MapPin size={28} className="text-[#099AB3] mx-auto mb-2" />,
             title: "Address",
-            content: "Iris Watson, 283 Fusce Rd, NY",
+            content: "4 Naa Botwey Street, Mabey, Haatso , Accra, Ghana",
         },
         {
             icon: <Clock size={28} className="text-[#099AB3] mx-auto mb-2" />,
             title: "Open Time",
-            content: "10:00 am to 23:00 pm",
+            content: "9:00 am to 5:00 pm",
         },
         {
             icon: <Mail size={28} className="text-[#099AB3] mx-auto mb-2" />,
             title: "Email",
-            content: "info.colorlib@gmail.com",
+            content: "info@aibconsulting.biz",
         },
     ];
 
@@ -92,7 +108,7 @@ const ContactUs = () => {
                 <div className="mt-10 px-4 max-w-6xl mx-auto">
                     <motion.iframe
                         className="w-full h-96 rounded-lg shadow-lg"
-                        src="https://maps.google.com/maps?q=Riga&output=embed"
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3970.2572788020293!2d-0.2044089254651427!3d5.67589893243331!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xfdf9c46381efe3f%3A0x277ee275bff66dca!2sMabey%20St%2C%20Haatso!5e0!3m2!1sen!2sgh!4v1745940621215!5m2!1sen!2sgh" 
                         initial={{ opacity: 0, y: 40 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.8 }}

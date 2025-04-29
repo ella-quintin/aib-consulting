@@ -4,7 +4,7 @@ import hero from "../../assets/images/hero.jpg";
 import { motion } from "framer-motion";
 import about from "../../assets/images/about-image.jpg";
 import { FaCheckCircle } from "react-icons/fa";
-import { useState,} from "react";
+import { useState,useEffect } from "react";
 import {
     FaShieldAlt,
     FaRocket,
@@ -20,7 +20,29 @@ import {
 import Footer from "../../components/footer";
 
 const Landing = () => {
-    const [showScrollButton,] = useState(false);
+    const [showScrollButton, setShowScrollButton] = useState(false);
+
+    // Handle scroll events to toggle button visibility
+    useEffect(() => {
+        const handleScroll = () => {
+            if (window.scrollY > 200) {
+                setShowScrollButton(true);
+            } else {
+                setShowScrollButton(false);
+            }
+        };
+        window.addEventListener("scroll", handleScroll);
+
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
+
+    // Scroll to top logic
+    const scrollToTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+        });
+    };
 
     const containerVariants = {
         hidden: {},
@@ -38,13 +60,6 @@ const Landing = () => {
         }
     };
 
-    // Scroll to top logic
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-}
 
     return (
         <>
@@ -462,12 +477,12 @@ const Landing = () => {
                     <div className="text-center md:text-left mb-6 md:mb-0">
                         <h2 className="text-3xl sm:text-4xl font-bold mb-4">Contact us now!</h2>
                         <p className="text-lg max-w-md">
-                            Contact (+12) 345-678-9999 to book directly or for advice
+                            Contact +233-302905659 | +233-243380612 for Consulting
                         </p>
                     </div>
 
                     {/* Button */}
-                    <Link to="/contact">
+                    <Link to="/contact-us">
                         <button className="bg-[#09B2A7] hover:bg-[#077f91] text-white font-semibold px-8 py-3 rounded-full shadow-md transition-all duration-300">
                             Contact Now
                         </button>
