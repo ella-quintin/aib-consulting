@@ -10,6 +10,9 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
+
+# Deployment archives (generated locally for cPanel upload)
+*.zip
 *.local
 .env
 

@@ -1,0 +1,70 @@
+# =====================================================================
+# AIB Consulting — security headers & server behaviour
+# Deploy to the web root (public_html). Vite copies public/.htaccess
+# into dist/ automatically on every build.
+# NOTE: if public_html already contains an .htaccess, replace it with
+# this one (or merge) — this file includes the SPA rewrite rules.
+# =====================================================================
+
+# ---------------------------------------------------------------------
+# 1. Force HTTPS (remove this block only if SSL is not yet active)
+# ---------------------------------------------------------------------
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTPS} !=on
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+</IfModule>
+
+# ---------------------------------------------------------------------
+# 2. Security headers
+# ---------------------------------------------------------------------
+<IfModule mod_headers.c>
+  # CSP: everything is self-hosted. Exceptions the site actually uses:
+  #   img-src  images.unsplash.com  — contact page banner background
+  #   frame-src www.google.com      — Google Maps embed on /contact-us
+  #   'unsafe-inline' styles        — required by React's inline styles
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' https://images.unsplash.com; font-src 'self'; connect-src 'self'; frame-src https://www.google.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; upgrade-insecure-requests"
+
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "accelerometer=(), autoplay=(), camera=(), display-capture=(), encrypted-media=(), fullscreen=(), geolocation=(), gyroscope=(), idle-detection=(), magnetometer=(), microphone=(), midi=(), payment=(), usb=(), xr-spatial-tracking=(), interest-cohort=()"
+
+  # HSTS is only evaluated when the site is served over HTTPS
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+  Header always set Cross-Origin-Opener-Policy "same-origin"
+
+  # Deprecated header; current best practice is to explicitly disable it
+  Header always set X-XSS-Protection "0"
+
+  Header always unset X-Powered-By
+</IfModule>
+
+# ---------------------------------------------------------------------
+# 3. SPA fallback — client-side routes (/about-us, /our-services, ...)
+#    must serve index.html or they 404 on Apache
+# ---------------------------------------------------------------------
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /index.html [L]
+</IfModule>
+
+# ---------------------------------------------------------------------
+# 4. Caching (Vite hashes js/css filenames, so 1 year is safe there)
+# ---------------------------------------------------------------------
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/html "access plus 0 seconds"
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType image/jpeg "access plus 1 month"
+  ExpiresByType image/png "access plus 1 month"
+  ExpiresByType image/svg+xml "access plus 1 month"
+  ExpiresByType image/x-icon "access plus 1 month"
+  ExpiresByType font/woff2 "access plus 1 year"
+</IfModule>
+
+# Don't expose directory listings
+Options -Indexes
